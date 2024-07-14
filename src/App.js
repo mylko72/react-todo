@@ -1,23 +1,19 @@
-import logo from './logo.svg';
 import './App.css';
+import { IoSunnyOutline } from "react-icons/io5";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div class="App-container">
+      <div className="App-todo">
+        <header className="App-header">
+          <IoSunnyOutline class="todo-mode" />
+          <ul class="todo-filtered">
+            <li class="active"><a href="#">All</a></li>
+            <li><a href="#">Active</a></li>
+            <li><a href="#">Completed</a></li>                        
+          </ul>
+        </header>
+      </div>
     </div>
   );
 }
