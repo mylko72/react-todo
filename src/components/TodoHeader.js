@@ -4,8 +4,6 @@ import { IoSunnyOutline } from "react-icons/io5";
 
 export default function TodoHeader() {
 
-  console.log('styles', styles);
-
   return (
     <header className={`${styles.header}`}>
       <IoSunnyOutline className={styles.mode} />

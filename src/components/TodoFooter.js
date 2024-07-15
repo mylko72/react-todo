@@ -1,12 +1,26 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import styles from './TodoFooter.module.css';
 
-export default function TodoFooter() {
+export default function TodoFooter({ onAdd, onEdit, todo }) {
+  const [item, setItem] = useState('')
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setItem('');
+    todo.name === '' ? onAdd(item) : onEdit(todo.index, item);
+  }
+
+  useEffect(() => {
+    if(todo.name !== ''){
+      setItem(prev => todo.name);
+    }
+  }, [todo])
+
   return (
     <div className={`${styles.footer}`}>
-      <form className={styles.form}>
-        <input type="text" />
-        <button type="submit">Add</button>
+      <form className={styles.form} onSubmit={handleSubmit}>
+        <input type="text" value={item} onChange={e => setItem(prev => e.target.value)} />
+        <button type="submit">{todo.name === '' ? 'Add' : 'Edit'}</button>
       </form>
     </div>
   );
