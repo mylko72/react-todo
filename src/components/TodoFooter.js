@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styles from './TodoFooter.module.css';
 
-export default function TodoFooter({ onAdd, onEdit, todo }) {
+export default function TodoFooter({ mode, onAdd, onEdit, todo }) {
   const [item, setItem] = useState('')
 
   const handleSubmit = (e) => {
@@ -17,7 +17,7 @@ export default function TodoFooter({ onAdd, onEdit, todo }) {
   }, [todo])
 
   return (
-    <div className={`${styles.footer}`}>
+    <div className={`${styles[mode]} ${styles.footer}`}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input type="text" value={item} onChange={e => setItem(prev => e.target.value)} />
         <button type="submit">{todo.name === '' ? 'Add' : 'Edit'}</button>

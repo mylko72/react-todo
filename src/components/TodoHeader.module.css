@@ -11,15 +11,33 @@
 }
 
 .filtered li {
-  padding: 0 .5rem;
+  display: flex;
+  align-items: center;
+  padding: 0 .5rem 0 0;
 }
 
-.filtered a { 
+.filtered button { 
   position: relative;
+  margin-right: 3px;
+  border: none;
+  background-color: transparent;
   font-weight: 600;
+  cursor: pointer;
 }
 
-.filtered .active a::after {
+.filtered .count { 
+  display: inline-block;
+  width: 20px;
+  height: 16px;
+  border-radius: 10px;
+  background-color: chocolate;
+  font-size:.6rem;
+  color: #fff;
+  line-height: 16px;
+  text-align: center;
+}
+
+.filtered .active button::after {
   position: absolute;
   left: 0;
   bottom: -2px;
@@ -38,11 +56,11 @@
   background-color: #385669;
 }
 
-.dark.header .filtered a { 
+.dark.header .filtered button { 
   color: #fdc407;
 }
 
-.dark .filtered .active a::after {
+.dark .filtered .active button::after {
   background-color: #fff;
 }
 

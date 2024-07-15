@@ -3,10 +3,10 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { AiOutlineDelete } from "react-icons/ai";
 import styles from './TodoLists.module.css';
 
-export default function TodoLists({ todos, onChange, onSelected, onDelete }) {
+export default function TodoLists({ todos, mode, onChange, onSelected, onDelete }) {
 
   return (
-    <div className={`${styles.todolists}`}>
+    <div className={`${styles[mode]} ${styles.todolists}`}>
       <ul>
         {
           todos.map((todo, idx) => 
