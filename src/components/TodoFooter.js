@@ -6,8 +6,9 @@ export default function TodoFooter({ mode, onAdd, onEdit, todo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setItem('');
+    if(!item.length) return false;
     todo.name === '' ? onAdd(item) : onEdit(todo, item);
+    setItem('');
   }
 
   const handleCancel = () => {
