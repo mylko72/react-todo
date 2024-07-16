@@ -5,7 +5,8 @@ import TodoHeader from './components/TodoHeader';
 import TodoLists from './components/TodoLists';
 
 function App() {
-  const [todos, setTodos] = useState(todoLists);
+  const myStorage = JSON.parse(localStorage.getItem('todos'));
+  const [todos, setTodos] = useState(myStorage || todoLists);
   const [activeTodos, setActiveTodos] = useState([]);
   const [completedTodos, setCompletedTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState(todos);
@@ -19,8 +20,6 @@ function App() {
       for(let todo of todos){
         saveLocalStorage(myStorage, todo)
       };
-    }else{
-      setTodos(myStorage);
     }
 
     const activeTodos = todos.filter(todo => !todo.checked)
@@ -29,7 +28,7 @@ function App() {
     const completedTodos = todos.filter(todo => todo.checked)
     setCompletedTodos(completedTodos);
 
-    const allTodos = todos.map(todo => todo)
+    const allTodos = todos.map(todo => todo);
 
     if(filter === 'active'){
       setFilteredTodos(activeTodos);
@@ -47,9 +46,9 @@ function App() {
   }
 
   // 할일 활성/비활성
-  const handleChange = (idx) => {
+  const handleChange = (item) => {
     const checkedTodos = todos.map((todo, i) => {
-      if(idx === i){
+      if(item.name === todo.name){
         return {
           ...todo,
           checked: !todo.checked
@@ -70,15 +69,13 @@ function App() {
     }
 
     setTodos([...todos, todoItem])
-
-    const myStorage = JSON.parse(localStorage.getItem('todos') || '[]');
-    saveLocalStorage(myStorage, todoItem)
+    localStorage.setItem('todos', JSON.stringify([...todos, todoItem]));    
   }
 
   // 할일 수정
-  const handleEdit = (index, item) => {
+  const handleEdit = (prev, item) => {
     const editTodos = todos.map((todo, i) => {
-      if(index === i){
+      if(prev.name === todo.name){
         return {
           ...todo,
           name: item
@@ -144,7 +141,7 @@ function App() {
         <TodoFooter 
           mode={mode}
           onAdd={item => handleAdd(item)} 
-          onEdit={(i, item) => handleEdit(i, item)} 
+          onEdit={(prev, item) => handleEdit(prev, item)} 
           todo={to} 
         />
       </div>

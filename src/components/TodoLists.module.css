@@ -15,6 +15,10 @@
   margin-right: .5rem;
 }
 
+.todolists li input[type="checkbox"]:checked + label {
+  text-decoration: line-through;
+}
+
 .todolists .utils {
   margin-left: auto;
 }
@@ -31,6 +35,10 @@
   border: none;
   font-size: 1.2rem;
   cursor: pointer;
+}
+
+.todolists .utils button:disabled {
+  cursor: default;
 }
 
 .dark.todolists {

@@ -17,7 +17,7 @@ export default function TodoLists({ todos, mode, onChange, onSelected, onDelete 
                 id={`title${idx}`} 
                 value={todo.checked} 
                 checked={todo.checked}
-                onChange={() => onChange(idx)}
+                onChange={() => onChange(todo)}
               />
               <label htmlFor={`title${idx}`}>{todo.name}</label>
               <div className={styles.utils}>

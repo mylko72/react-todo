@@ -23,6 +23,7 @@
 .footer .form button {
   width: 70px;
   height: 36px;
+  padding: 0 .5rem;
   border: none;
   border-radius: 0 5px 5px 0;
   background-color: chocolate;
@@ -30,6 +31,11 @@
   color: #fff;
   text-align: center;
   cursor: pointer;
+}
+
+.footer .form .edit {
+  border-radius:  0;
+  border-right: 1px solid rgba(255, 255, 255, .5);
 }
 
 .dark.footer {
