@@ -22,7 +22,7 @@ export default function TodoLists({ todos, mode, onChange, onSelected, onDelete 
               <label htmlFor={`title${idx}`}>{todo.name}</label>
               <div className={styles.utils}>
                 <button type="button" disabled={todo.checked} onClick={() => onSelected(idx, todo.name)}><AiOutlineEdit  /></button>
-                <button type="button" onClick={() => onDelete(idx)}><AiOutlineDelete  /></button>            
+                <button type="button" onClick={() => onDelete(todo)}><AiOutlineDelete  /></button>            
               </div>
             </li>
           )

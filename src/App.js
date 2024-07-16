@@ -11,8 +11,18 @@ function App() {
   const [filteredTodos, setFilteredTodos] = useState(todos);
   const [to, setTo] = useState({index:'', name: ''});
   const [mode, setMode] = useState('');
+  const [filter, setFilter] = useState('all');
 
   useEffect(() => {
+    const myStorage = JSON.parse(localStorage.getItem('todos') || '[]');    
+    if(!myStorage.length){
+      for(let todo of todos){
+        saveLocalStorage(myStorage, todo)
+      };
+    }else{
+      setTodos(myStorage);
+    }
+
     const activeTodos = todos.filter(todo => !todo.checked)
     setActiveTodos(activeTodos);
 
@@ -20,12 +30,25 @@ function App() {
     setCompletedTodos(completedTodos);
 
     const allTodos = todos.map(todo => todo)
-    setFilteredTodos(allTodos);
 
-  }, [todos])
+    if(filter === 'active'){
+      setFilteredTodos(activeTodos);
+    }else if(filter === 'completed'){
+      setFilteredTodos(completedTodos);
+    }else{
+      setFilteredTodos(allTodos);
+    }
+  }, [todos, filter])
 
+  const saveLocalStorage = (storage, item) => {
+    storage.push(item);
+    const uniqueTodoData = Array.from(new Set(storage));
+    localStorage.setItem('todos', JSON.stringify(uniqueTodoData));
+  }
+
+  // 할일 활성/비활성
   const handleChange = (idx) => {
-    const nextTodos = todos.map((todo, i) => {
+    const checkedTodos = todos.map((todo, i) => {
       if(idx === i){
         return {
           ...todo,
@@ -35,19 +58,24 @@ function App() {
       return todo;
     });
   
-    setTodos(nextTodos);
+    setTodos(checkedTodos);
+    localStorage.setItem('todos', JSON.stringify(checkedTodos));
   }
 
+  // 할일 추가
   const handleAdd = (item) => {
-    setTodos([
-      ...todos,
-      {
-        name: item,
-        checked: false
-      }
-    ])
+    const todoItem = {
+      name: item,
+      checked: false
+    }
+
+    setTodos([...todos, todoItem])
+
+    const myStorage = JSON.parse(localStorage.getItem('todos') || '[]');
+    saveLocalStorage(myStorage, todoItem)
   }
 
+  // 할일 수정
   const handleEdit = (index, item) => {
     const editTodos = todos.map((todo, i) => {
       if(index === i){
@@ -61,14 +89,21 @@ function App() {
 
     setTodos(editTodos);
     setTo({index: '', name: ''});
+    localStorage.setItem('todos', JSON.stringify(editTodos));    
   }
 
-  const handleDelete = (index) => {
-    const nextTodos = todos.filter((todo, i) => index !== i);
+  // 할일 삭제
+  const handleDelete = (item) => {
+    const nextTodos = todos.filter((todo, i) => todo.name !== item.name);
     setTodos(nextTodos);
+
+    localStorage.setItem('todos', JSON.stringify(nextTodos));
   }
 
+  // 할일 필터링
   const handleFilter = (type) => {
+    setFilter(prev => type);
+
     if(type === 'active'){
       const activeTodos = todos.filter(todo => !todo.checked)
       setFilteredTodos(activeTodos);
@@ -81,6 +116,7 @@ function App() {
     }
   }
 
+  // 모드 전환
   const handleMode = (next) => {
     mode === '' ? setMode(next) : setMode('');
   }
