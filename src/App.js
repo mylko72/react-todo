@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import './App.css';
 import TodoFooter from './components/TodoFooter';
 import TodoHeader from './components/TodoHeader';
@@ -10,7 +11,7 @@ function App() {
   const [activeTodos, setActiveTodos] = useState([]);
   const [completedTodos, setCompletedTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState(todos);
-  const [to, setTo] = useState({index:'', name: ''});
+  const [item, setItem] = useState({});
   const [mode, setMode] = useState('');
   const [filter, setFilter] = useState('all');
 
@@ -22,10 +23,10 @@ function App() {
       };
     }
 
-    const activeTodos = todos.filter(todo => !todo.checked)
+    const activeTodos = todos.filter(todo => todo.status === 'active');
     setActiveTodos(activeTodos);
 
-    const completedTodos = todos.filter(todo => todo.checked)
+    const completedTodos = todos.filter(todo => todo.status === 'completed');
     setCompletedTodos(completedTodos);
 
     const allTodos = todos.map(todo => todo);
@@ -48,11 +49,8 @@ function App() {
   // 할일 활성/비활성
   const handleChange = (item) => {
     const checkedTodos = todos.map((todo, i) => {
-      if(item.name === todo.name){
-        return {
-          ...todo,
-          checked: !todo.checked
-        }
+      if(item.id === todo.id){
+        return item;
       }
       return todo;
     });
@@ -68,22 +66,22 @@ function App() {
   }
 
   // 할일 수정
-  const handleEdit = (prev, item) => {
+  const handleEdit = (prevItem, newItem) => {
     const editTodos = todos.map((todo, i) => {
-      if(prev.name === todo.name){
-        return item
+      if(prevItem.id === todo.id){
+        return newItem
       }
       return todo
     });
 
     setTodos(editTodos);
-    setTo({index: '', name: ''});
+    setItem({});
     localStorage.setItem('todos', JSON.stringify(editTodos));    
   }
 
   // 할일 삭제
   const handleDelete = (item) => {
-    const nextTodos = todos.filter((todo, i) => todo.name !== item.name);
+    const nextTodos = todos.filter((todo, i) => todo.id !== item.id);
     setTodos(nextTodos);
 
     localStorage.setItem('todos', JSON.stringify(nextTodos));
@@ -94,10 +92,10 @@ function App() {
     setFilter(prev => type);
 
     if(type === 'active'){
-      const activeTodos = todos.filter(todo => !todo.checked)
+      const activeTodos = todos.filter(todo => todo.status === 'active');
       setFilteredTodos(activeTodos);
     }else if(type === 'completed'){
-      const completedTodos = todos.filter(todo => todo.checked)
+      const completedTodos = todos.filter(todo => todo.status === 'completed')
       setFilteredTodos(completedTodos);
     }else{
       const allTodos = todos.map(todo => todo)
@@ -126,15 +124,16 @@ function App() {
           mode={mode}
           activeTodos={activeTodos}
           completedTodos={completedTodos}
-          onChange={idx => handleChange(idx)} 
-          onSelected={(index, name) => setTo({index, name})}
-          onDelete={idx => handleDelete(idx)}
+          onUpdate={idx => handleChange(idx)} 
+          onSelected={item => setItem(item)}
+          onDelete={item => handleDelete(item)}
         />
         <TodoFooter 
           mode={mode}
           onAdd={item => handleAdd(item)} 
-          onEdit={(prev, item) => handleEdit(prev, item)} 
-          todo={to} 
+          onEdit={(prevItem, newItem) => handleEdit(prevItem, newItem)} 
+          onCancel={() => setItem({})}
+          editItem={item}
         />
       </div>
     </div>
@@ -143,19 +142,19 @@ function App() {
 
 const todoLists = [
   {
-    id: '',
+    id: uuidv4(),
     name: '리액트 공부하기',
-    checked: false
+    status: 'active'
   },
   {
-    id: '',
+    id: uuidv4(),
     name: '청소하기',
-    checked: false
+    status: 'active'
   },
   {
-    id: '',
+    id: uuidv4(),
     name: '영화보기',
-    checked: false
+    status: 'active'
   },
 ]
 

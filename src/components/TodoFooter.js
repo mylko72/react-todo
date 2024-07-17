@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './TodoFooter.module.css';
 
-export default function TodoFooter({ mode, onAdd, onEdit, todo }) {
+export default function TodoFooter({ mode, onAdd, onEdit, onCancel, editItem }) {
   const [item, setItem] = useState('')
 
   const handleSubmit = (e) => {
@@ -12,27 +12,27 @@ export default function TodoFooter({ mode, onAdd, onEdit, todo }) {
       setItem('');
       return false;
     }
-    todo.name === '' ? onAdd({ id: uuidv4(), name: text, checked: false }) : onEdit(todo, { id: uuidv4(), name: text, checked: false });
+    Object.keys(editItem).length === 0 ? onAdd({ id: uuidv4(), name: text, status: 'active' }) : onEdit(editItem, { id: editItem.id, name: text, status: editItem.status });
     setItem('');
   }
 
   const handleCancel = () => {
     setItem('');
-    todo.name = '';
+    onCancel();
   }
 
   useEffect(() => {
-    if(todo.name !== ''){
-      setItem(prev => todo.name);
+    if(editItem.name !== ''){
+      setItem(prev => editItem.name);
     }
-  }, [todo])
+  }, [editItem])
 
   return (
     <div className={`${styles[mode]} ${styles.footer}`}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input type="text" value={item} onChange={e => setItem(prev => e.target.value)} />
-        <button type="submit" className={todo.name && styles.edit}>{todo.name === '' ? 'Add' : 'Edit'}</button>
-        {todo.name && <button type="button" onClick={handleCancel}>Cancel</button>}
+        <button type="submit" className={Object.keys(editItem).length && styles.edit}>{!Object.keys(editItem).length ? 'Add' : 'Edit'}</button>
+        {Object.keys(editItem).length > 0 && <button type="button" onClick={handleCancel}>Cancel</button>}
       </form>
     </div>
   );
