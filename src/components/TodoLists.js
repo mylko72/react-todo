@@ -1,6 +1,5 @@
 import React from 'react';
-import { AiOutlineEdit } from "react-icons/ai";
-import { AiOutlineDelete } from "react-icons/ai";
+import ToDo from './ToDo';
 import styles from './TodoLists.module.css';
 
 export default function TodoLists({ todos, mode, onChange, onSelected, onDelete }) {
@@ -11,7 +10,15 @@ export default function TodoLists({ todos, mode, onChange, onSelected, onDelete 
         {
           todos.map((todo, idx) => 
             <li key={idx}>
-              <input 
+              <ToDo 
+                id={idx}
+                todo={todo}
+                onChange={onChange}
+                onSelected={onSelected}
+                onDelete={onDelete}
+                styles={styles}
+              />
+              {/* <input 
                 type="checkbox" 
                 name="chk" 
                 id={`title${idx}`} 
@@ -23,7 +30,7 @@ export default function TodoLists({ todos, mode, onChange, onSelected, onDelete 
               <div className={styles.utils}>
                 <button type="button" disabled={todo.checked} onClick={() => onSelected(idx, todo.name)}><AiOutlineEdit  /></button>
                 <button type="button" onClick={() => onDelete(todo)}><AiOutlineDelete  /></button>            
-              </div>
+              </div> */}
             </li>
           )
         }

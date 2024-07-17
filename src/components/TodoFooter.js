@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import styles from './TodoFooter.module.css';
 
 export default function TodoFooter({ mode, onAdd, onEdit, todo }) {
@@ -6,8 +7,12 @@ export default function TodoFooter({ mode, onAdd, onEdit, todo }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(!item.length) return false;
-    todo.name === '' ? onAdd(item.replace(/^\s+|\s+$/gm,'')) : onEdit(todo, item.replace(/^\s+|\s+$/gm,''));
+    const text = item.replace(/^\s+|\s+$/gm,'');
+    if(!text.length){
+      setItem('');
+      return false;
+    }
+    todo.name === '' ? onAdd({ id: uuidv4(), name: text, checked: false }) : onEdit(todo, { id: uuidv4(), name: text, checked: false });
     setItem('');
   }
 

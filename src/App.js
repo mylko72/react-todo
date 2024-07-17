@@ -62,24 +62,16 @@ function App() {
   }
 
   // 할일 추가
-  const handleAdd = (item) => {
-    const todoItem = {
-      name: item,
-      checked: false
-    }
-
-    setTodos([...todos, todoItem])
-    localStorage.setItem('todos', JSON.stringify([...todos, todoItem]));    
+  const handleAdd = (todo) => {
+    setTodos([...todos, todo])
+    localStorage.setItem('todos', JSON.stringify([...todos, todo]));    
   }
 
   // 할일 수정
   const handleEdit = (prev, item) => {
     const editTodos = todos.map((todo, i) => {
       if(prev.name === todo.name){
-        return {
-          ...todo,
-          name: item
-        }
+        return item
       }
       return todo
     });
@@ -151,14 +143,17 @@ function App() {
 
 const todoLists = [
   {
+    id: '',
     name: '리액트 공부하기',
     checked: false
   },
   {
+    id: '',
     name: '청소하기',
     checked: false
   },
   {
+    id: '',
     name: '영화보기',
     checked: false
   },
