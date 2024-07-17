@@ -1,6 +1,7 @@
 .todolists {
   height: 100%;
   padding: 1.5rem 1rem;
+  overflow-y: auto;
 }
 
 .todolists li {

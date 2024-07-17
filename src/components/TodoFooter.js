@@ -7,7 +7,7 @@ export default function TodoFooter({ mode, onAdd, onEdit, todo }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(!item.length) return false;
-    todo.name === '' ? onAdd(item.trim()) : onEdit(todo, item.trim());
+    todo.name === '' ? onAdd(item.replace(/^\s+|\s+$/gm,'')) : onEdit(todo, item.replace(/^\s+|\s+$/gm,''));
     setItem('');
   }
 
