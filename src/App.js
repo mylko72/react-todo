@@ -4,6 +4,7 @@ import './App.css';
 import TodoFooter from './components/TodoFooter';
 import TodoHeader from './components/TodoHeader';
 import TodoLists from './components/TodoLists';
+import { DarkModeProvider } from './context/DarkModeContext';
 
 function App() {
   const myStorage = JSON.parse(localStorage.getItem('todos'));
@@ -12,7 +13,6 @@ function App() {
   const [completedTodos, setCompletedTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState(todos);
   const [item, setItem] = useState({});
-  const [mode, setMode] = useState('');
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
@@ -103,38 +103,29 @@ function App() {
     }
   }
 
-  // 모드 전환
-  const handleMode = (next) => {
-    mode === '' ? setMode(next) : setMode('');
-  }
-
   return (
     <div className="App-container">
       <div className="App-todo">
-        <TodoHeader
-          todos={todos}
-          mode={mode}
-          activeTodos={activeTodos}
-          completedTodos={completedTodos}
-          onFiltered={type => handleFilter(type)}
-          onChangeMode={mode => handleMode(mode)}
-        />
-        <TodoLists 
-          todos={filteredTodos}
-          mode={mode}
-          activeTodos={activeTodos}
-          completedTodos={completedTodos}
-          onUpdate={idx => handleChange(idx)} 
-          onSelected={item => setItem(item)}
-          onDelete={item => handleDelete(item)}
-        />
-        <TodoFooter 
-          mode={mode}
-          onAdd={item => handleAdd(item)} 
-          onEdit={(prevItem, newItem) => handleEdit(prevItem, newItem)} 
-          onCancel={() => setItem({})}
-          editItem={item}
-        />
+        <DarkModeProvider>
+          <TodoHeader
+            todos={todos}
+            activeTodos={activeTodos}
+            completedTodos={completedTodos}
+            onFiltered={type => handleFilter(type)}
+          />
+          <TodoLists 
+            todos={filteredTodos}
+            onUpdate={idx => handleChange(idx)} 
+            onSelected={item => setItem(item)}
+            onDelete={item => handleDelete(item)}
+          />
+          <TodoFooter 
+            onAdd={item => handleAdd(item)} 
+            onEdit={(prevItem, newItem) => handleEdit(prevItem, newItem)} 
+            onCancel={() => setItem({})}
+            editItem={item}
+          />
+        </DarkModeProvider>
       </div>
     </div>
   );

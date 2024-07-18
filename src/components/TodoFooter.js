@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useContext, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import styles from './TodoFooter.module.css';
+import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function TodoFooter({ mode, onAdd, onEdit, onCancel, editItem }) {
+export default function TodoFooter({ onAdd, onEdit, onCancel, editItem }) {
   const [item, setItem] = useState('')
-
+  const { darkMode } = useContext(DarkModeContext);
   const inputRef = useRef(null);
 
   const handleSubmit = (e) => {
@@ -31,7 +32,7 @@ export default function TodoFooter({ mode, onAdd, onEdit, onCancel, editItem }) 
   }, [editItem])
 
   return (
-    <div className={`${styles[mode]} ${styles.footer}`}>
+    <div className={`${darkMode ? styles.dark : ''} ${styles.footer}`}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <input type="text" value={item} ref={inputRef} onChange={e => setItem(prev => e.target.value)} />
         <button type="submit" className={Object.keys(editItem).length && styles.edit}>{!Object.keys(editItem).length ? 'Add' : 'Edit'}</button>

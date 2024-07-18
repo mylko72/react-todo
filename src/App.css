@@ -3,6 +3,14 @@
   padding: 0;
 }
 
+:root {
+  --color-bg: #ebebeb;
+  --color-bg-dark: #385669;
+  --color-bg-dark2: #3c6077;
+  --color-accent: chocolate;
+  --color-dark-accent: #fdc407;
+}
+
 html, body, #root {
   height: 100%;
 }
@@ -20,6 +28,12 @@ a:visited {
   color: #666
 }
 
+button {
+  outline: none;
+  border: none;
+  background-color: transparent;
+}
+
 .App-container {
   display: flex;
   height: 100%;
@@ -32,8 +46,12 @@ a:visited {
   height: 480px;
   overflow: hidden;
   margin: auto;
+  accent-color: var(--color-accent);
   border: 1px solid #ccc;
   border-radius: 1rem;
   background-color: #fff;
+  box-shadow: 4px 4px 6px -3px rgba(0,0,0,0.5);
+  -webkit-box-shadow: 4px 4px 6px -3px rgba(0,0,0,0.5);
+  -moz-box-shadow: 4px 4px 6px -3px rgba(0,0,0,0.5);
   text-align: center;
 }

@@ -1,7 +1,7 @@
 .footer {
   margin-top: auto;  
   padding: 20px;
-  background-color: #ebebeb;
+  background-color: var(--color-bg);
 }
 
 .footer .form {
@@ -10,7 +10,7 @@
 }
 
 .footer .form input[type="text"] {
-  width: calc(100% - 70px);
+  flex: 1 0 auto;
   height: 34px;
   padding: 0 10px;
   border: 1px solid #ddd;
@@ -26,11 +26,15 @@
   padding: 0 .5rem;
   border: none;
   border-radius: 0 5px 5px 0;
-  background-color: chocolate;
+  background-color: var(--color-accent);
   font-size: 1rem;  
   color: #fff;
   text-align: center;
   cursor: pointer;
+}
+
+.footer .form button:hover {
+  filter: brightness(120%);
 }
 
 .footer .form .edit {
@@ -39,5 +43,5 @@
 }
 
 .dark.footer {
-  background-color: #385669;
+  background-color: var(--color-bg-dark);
 }

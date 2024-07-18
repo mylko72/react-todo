@@ -1,5 +1,5 @@
 .todolists {
-  height: 100%;
+  flex: 1 1 auto;
   padding: 1.5rem 1rem;
   overflow-y: auto;
 }
@@ -18,6 +18,11 @@
 
 .todolists li input[type="checkbox"]:checked + label {
   text-decoration: line-through;
+}
+
+.todolists li label {
+  flex: 1 1 0%;
+  text-align: left;
 }
 
 .todolists .utils {
@@ -43,7 +48,7 @@
 }
 
 .dark.todolists {
-  background-color: #3c6077;
+  background-color: var(--color-bg-dark2);
 }
 
 .dark.todolists li {

@@ -1,45 +1,53 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styles from './TodoHeader.module.css';
-import { IoSunnyOutline } from "react-icons/io5";
+import { AiOutlineSun } from "react-icons/ai";
+import { AiOutlineMoon } from "react-icons/ai";
+import { DarkModeContext } from '../context/DarkModeContext';
 
-export default function TodoHeader({todos, mode, activeTodos, completedTodos, onFiltered, onChangeMode}) {
-  const [index, setIndex] = useState(0);
+export default function TodoHeader({todos, activeTodos, completedTodos, onFiltered}) {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const {darkMode, toggleDarkMode} = useContext(DarkModeContext);
 
   return (
-    <header className={`${styles[mode]} ${styles.header}`}>
-      <IoSunnyOutline className={styles.mode} onClick={() => onChangeMode('dark')} />
-
+    <header className={`${darkMode ? styles.dark : ''} ${styles.header}`}>
+      <button onClick={toggleDarkMode}>
+        { darkMode ?
+          <AiOutlineSun className={styles.mode} /> :
+          <AiOutlineMoon className={styles.mode} />        
+        }
+      </button>
+      
       <ul className={styles.filtered}>
-        <li className={index === 0 ? styles.active : ''}>
+        <li className={activeIndex === 0 ? styles.active : ''}>
           <button 
             type="button" 
             onClick={() => {              
               onFiltered('all');
-              setIndex(0);
+              setActiveIndex(0);
             }}
           >
             All
           </button>
           <span className={styles.count}>{todos.length}</span>
         </li>
-        <li className={index === 1 ? styles.active : ''}>
+        <li className={activeIndex === 1 ? styles.active : ''}>
           <button 
             type="button" 
             onClick={() => {
               onFiltered('active');
-              setIndex(1);
+              setActiveIndex(1);
             }}
           >
             Active
           </button>
           <span className={styles.count}>{activeTodos.length}</span>          
         </li>
-        <li className={index === 2 ? styles.active : ''}>
-          <button 
+        <li className={activeIndex === 2 ? styles.active : ''}>
+          <button
             type="button" 
             onClick={() => {
               onFiltered('completed');
-              setIndex(2);
+              setActiveIndex(2);
             }}
           >
             Completed

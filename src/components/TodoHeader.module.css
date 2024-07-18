@@ -3,7 +3,7 @@
   justify-content: space-between;
   padding: 25px 20px 20px;
   border-bottom: 1px solid #ccc;
-  background-color: #ebebeb;
+  background-color: var(--color-bg);
 }
 
 .filtered {
@@ -30,7 +30,7 @@
   width: 20px;
   height: 16px;
   border-radius: 10px;
-  background-color: chocolate;
+  background-color: var(--color-accent);
   font-size:.6rem;
   color: #fff;
   line-height: 16px;
@@ -53,11 +53,11 @@
 }
 
 .dark.header {
-  background-color: #385669;
+  background-color: var(--color-bg-dark);
 }
 
 .dark.header .filtered button { 
-  color: #fdc407;
+  color: var(--color-dark-accent);
 }
 
 .dark .filtered .active button::after {
