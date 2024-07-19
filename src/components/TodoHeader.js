@@ -1,16 +1,16 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import styles from './TodoHeader.module.css';
+import { useDarkMode } from '../context/DarkModeContext';
 import { AiOutlineSun } from "react-icons/ai";
 import { AiOutlineMoon } from "react-icons/ai";
-import { DarkModeContext } from '../context/DarkModeContext';
 
 export default function TodoHeader({todos, activeTodos, completedTodos, onFiltered}) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const {darkMode, toggleDarkMode} = useContext(DarkModeContext);
+  const {darkMode, toggleDarkMode} = useDarkMode();
 
   return (
-    <header className={`${darkMode ? styles.dark : ''} ${styles.header}`}>
-      <button onClick={toggleDarkMode}>
+    <header className={`${styles.header}`}>
+      <button className={styles.mode} onClick={toggleDarkMode}>
         { darkMode ?
           <AiOutlineSun className={styles.mode} /> :
           <AiOutlineMoon className={styles.mode} />        

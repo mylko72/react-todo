@@ -1,13 +1,11 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import ToDo from './ToDo';
 import styles from './TodoLists.module.css';
-import { DarkModeContext } from '../context/DarkModeContext';
 
 export default function TodoLists({ todos, onUpdate, onSelected, onDelete }) {
-  const { darkMode } = useContext(DarkModeContext);
 
   return (
-    <div className={`${darkMode ? styles.dark : ''} ${styles.todolists}`}>
+    <div className={`${styles.todolists}`}>
       <ul>
         {
           todos.map((todo, idx) =>          

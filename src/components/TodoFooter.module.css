@@ -28,7 +28,7 @@
   border-radius: 0 5px 5px 0;
   background-color: var(--color-accent);
   font-size: 1rem;  
-  color: #fff;
+  color: var(--color-accent-text);
   text-align: center;
   cursor: pointer;
 }
@@ -40,8 +40,4 @@
 .footer .form .edit {
   border-radius:  0;
   border-right: 1px solid rgba(255, 255, 255, .5);
-}
-
-.dark.footer {
-  background-color: var(--color-bg-dark);
 }

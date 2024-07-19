@@ -5,10 +5,18 @@
 
 :root {
   --color-bg: #ebebeb;
-  --color-bg-dark: #385669;
-  --color-bg-dark2: #3c6077;
+  --color-bg2: #fff;
   --color-accent: chocolate;
-  --color-dark-accent: #fdc407;
+  --color-accent-text: #fff;
+  --color-text: #222;
+}
+
+html.dark {
+  --color-bg: #385669; 
+  --color-bg2: #3c6077;
+  --color-text: #fff;
+  --color-accent: #fdc407;  
+  --color-accent-text: #222;
 }
 
 html, body, #root {
