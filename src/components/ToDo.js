@@ -15,11 +15,11 @@ export default function ToDo({todo, onUpdate, onSelected, onDelete, styles}) {
             <input 
                 type="checkbox" 
                 name="chk" 
-                id={`title-${id}`} 
+                id={id} 
                 checked={status === 'completed'}
                 onChange={handleChange}
             />
-            <label htmlFor={`title-${id}`}>{name}</label>
+            <label htmlFor={id}>{name}</label>
             <div className={styles.utils}>
                 <button type="button" disabled={status === 'completed'} onClick={() => onSelected(todo)}><AiOutlineEdit  /></button>
                 <button type="button" onClick={() => onDelete(todo)}><AiOutlineDelete /></button>

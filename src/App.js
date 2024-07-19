@@ -7,8 +7,7 @@ import TodoLists from './components/TodoLists';
 import { DarkModeProvider } from './context/DarkModeContext';
 
 function App() {
-  const myStorage = JSON.parse(localStorage.getItem('todos'));
-  const [todos, setTodos] = useState(myStorage || todoLists);
+  const [todos, setTodos] = useState(getLocalStorageItem || todoLists);
   const [activeTodos, setActiveTodos] = useState([]);
   const [completedTodos, setCompletedTodos] = useState([]);
   const [filteredTodos, setFilteredTodos] = useState(todos);
@@ -16,12 +15,7 @@ function App() {
   const [filter, setFilter] = useState('all');
 
   useEffect(() => {
-    const myStorage = JSON.parse(localStorage.getItem('todos') || '[]');    
-    if(!myStorage.length){
-      for(let todo of todos){
-        saveLocalStorage(myStorage, todo)
-      };
-    }
+    localStorage.setItem('todos', JSON.stringify(todos));
 
     const activeTodos = todos.filter(todo => todo.status === 'active');
     setActiveTodos(activeTodos);
@@ -40,12 +34,6 @@ function App() {
     }
   }, [todos, filter])
 
-  const saveLocalStorage = (storage, item) => {
-    storage.push(item);
-    const uniqueTodoData = Array.from(new Set(storage));
-    localStorage.setItem('todos', JSON.stringify(uniqueTodoData));
-  }
-
   // 할일 활성/비활성
   const handleChange = (item) => {
     const checkedTodos = todos.map((todo, i) => {
@@ -56,13 +44,13 @@ function App() {
     });
   
     setTodos(checkedTodos);
-    localStorage.setItem('todos', JSON.stringify(checkedTodos));
+    // localStorage.setItem('todos', JSON.stringify(checkedTodos));
   }
 
   // 할일 추가
   const handleAdd = (todo) => {
     setTodos([...todos, todo])
-    localStorage.setItem('todos', JSON.stringify([...todos, todo]));    
+    // localStorage.setItem('todos', JSON.stringify([...todos, todo]));    
   }
 
   // 할일 수정
@@ -76,7 +64,7 @@ function App() {
 
     setTodos(editTodos);
     setItem({});
-    localStorage.setItem('todos', JSON.stringify(editTodos));    
+    // localStorage.setItem('todos', JSON.stringify(editTodos));    
   }
 
   // 할일 삭제
@@ -84,7 +72,7 @@ function App() {
     const nextTodos = todos.filter((todo, i) => todo.id !== item.id);
     setTodos(nextTodos);
 
-    localStorage.setItem('todos', JSON.stringify(nextTodos));
+    // localStorage.setItem('todos', JSON.stringify(nextTodos));
   }
 
   // 할일 필터링
@@ -129,6 +117,15 @@ function App() {
       </div>
     </div>
   );
+}
+
+const getLocalStorageItem = () => {
+  const myStorage = JSON.parse(localStorage.getItem('todos'));
+  console.log('myStorage', myStorage);
+  if(myStorage){
+    return myStorage;
+  }
+  return [];
 }
 
 const todoLists = [
